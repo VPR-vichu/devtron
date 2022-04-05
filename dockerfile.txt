@@ -1,0 +1,7 @@
+FROM node
+
+MAINTAINER vishnu <vishnu121296@gmail.com>
+
+RUN apt-get update
+
+CMD ["echo","Hello World"]
