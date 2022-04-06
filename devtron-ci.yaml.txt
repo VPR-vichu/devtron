@@ -1,30 +1,33 @@
-# SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-leader
+  name: nginx
   labels:
-    app: redis
-    role: leader
-    tier: backend
+    app: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: redis
+      app: nginx
   template:
     metadata:
       labels:
-        app: redis
-        role: leader
-        tier: backend
+        app: nginx
     spec:
       containers:
-      - name: leader
-        image: "docker.io/redis:6.0.5"
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
+      - name: nginx
+        image: nginx
         ports:
-        - containerPort: 6379
+        - containerPort: 80
+apiVersion: v1
+kind: Service
+metadata:
+  name: ngnix-service
+spec:
+  selector:
+    app: nginx
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
